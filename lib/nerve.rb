@@ -17,9 +17,6 @@ module Nerve
     def initialize(opts={})
       log.info 'nerve: starting up!'
 
-      # set global variable for exit signal
-      $EXIT = false
-
       # required options
       log.debug 'nerve: checking for required inputs'
       %w{instance_id services}.each do |required|
@@ -50,7 +47,6 @@ module Nerve
         log.error "nerve: encountered unexpected exception #{e.inspect} in main thread"
         raise e
       ensure
-        $EXIT = true
         log.warn 'nerve: reaping all watchers'
         @watchers.each do |name, watcher_thread|
           reap_watcher(name)

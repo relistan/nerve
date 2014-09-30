@@ -50,7 +50,7 @@ module Nerve
       @reporter.start()
       was_up = false
 
-      until $EXIT
+      while true do
         @reporter.ping?
 
         # what is the status of the service?
@@ -76,7 +76,6 @@ module Nerve
       raise e
     ensure
       log.info "nerve: ending service watch #{@name}"
-      $EXIT = true
       @reporter.stop
     end
 
